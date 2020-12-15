@@ -3,9 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
-class Distinta extends Controller
+class Product extends Controller
 {
+    var $tblName = 'products';
+    var $jsonFileName = 'data.json';
+
     /**
      * Display a listing of the resource.
      *
@@ -13,7 +18,56 @@ class Distinta extends Controller
      */
     public function index()
     {
-//        print_r($this->dataImportToDB());
+        $products = $this->getData();
+
+        return view('products.list', [
+            'products' => $products
+        ]);
+    }
+
+    /**
+     * Get Products with Import JSON file.
+     *
+     * @return mixed
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     */
+    private function getData()
+    {
+        if (Storage::disk('public')->exists($this->jsonFileName)) {
+
+            $this->dataImportToDB();
+
+        }
+
+        $products = \App\Model\Product::paginate(10);
+
+        return $products;
+    }
+
+    /**
+     * Import Products from JSON file.
+     *
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     */
+    private function dataImportToDB()
+    {
+        $dataJSON = Storage::disk('public')->get($this->jsonFileName);
+        $dataArray = json_decode($dataJSON);
+        $dataSet = array();
+
+        foreach ($dataArray as $d) {
+
+            $dataSet[] = array(
+                'cod' => $d->cod,
+                'desc' => $d->des
+            );
+
+        }
+
+        DB::table($this->tblName)->truncate();
+        DB::table($this->tblName)->insert($dataSet);
+
+        Storage::disk('public')->delete($this->jsonFileName);
     }
 
     /**
