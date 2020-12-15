@@ -4,7 +4,7 @@
     <div class="container">
 
         <div class="card">
-            <div class="card-header">{{ __('navbar.Products') }}</div>
+            <div class="card-header">{{ __('navbar.products') }}</div>
 
             <div class="card-body">
 

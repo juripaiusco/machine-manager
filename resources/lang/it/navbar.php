@@ -2,6 +2,7 @@
 
 return [
 
-    'Products' => 'Prodotti',
+    'products' => 'Prodotti',
+    'users' => 'Utenti',
 
 ];

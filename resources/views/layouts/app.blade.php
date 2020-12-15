@@ -34,9 +34,12 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
                         @if (Auth::check())
-                        <li class="nav-item {{ Route::is('products') ? 'active' : '' }}">
-                            <a class="nav-link" href="{{ route('products') }}">{{ __('navbar.Products') }}</a>
-                        </li>
+                            <li class="nav-item {{ Route::is('users') ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ route('users') }}">{{ __('navbar.users') }}</a>
+                            </li>
+                            <li class="nav-item {{ Route::is('products') ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ route('products') }}">{{ __('navbar.products') }}</a>
+                            </li>
                         @endif
                     </ul>
 
