@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class Distinta extends Controller
 {
@@ -13,7 +14,15 @@ class Distinta extends Controller
      */
     public function index()
     {
-        echo 'ciao';
+        print_r($this->dataImportToDB());
+    }
+
+    private function dataImportToDB()
+    {
+        $dataJSON = Storage::disk('public')->get('data.json');
+        $dataArray = json_decode($dataJSON);
+
+        return $dataArray;
     }
 
     /**
