@@ -14,6 +14,10 @@
 
     </script>
 
+    <a class="btn btn-primary" href="{{ route('users.create') }}">Nuovo utente</a>
+
+    <br><br>
+
     <table class="table table-striped table-hover">
         <thead>
         <tr>

@@ -2,7 +2,7 @@
 
 @section('card-body')
 
-    <form method="post" action="{{ route('users.update', $user->id) }}">
+    <form method="post" action="{{ isset($user->id) ? route('users.update', $user->id) : route('users.store') }}">
 
         @csrf
 
@@ -13,7 +13,7 @@
                    id="name"
                    placeholder="Nome"
                    name="name"
-                   value="{{ $user->name }}">
+                   value="{{ isset($user->id) ? $user->name : '' }}">
         </div>
 
         <div class="form-group">
@@ -23,8 +23,20 @@
                    id="email"
                    placeholder="Email"
                    name="email"
-                   value="{{ $user->email }}">
+                   value="{{ isset($user->id) ? $user->email : '' }}">
         </div>
+
+        @if(!isset($user->id))
+        <div class="form-group">
+            <label for="email">Password</label>
+            <input type="text"
+                   class="form-control"
+                   id="password"
+                   placeholder="Password"
+                   name="password"
+                   value="{{ isset($user->id) ? $user->password : '' }}">
+        </div>
+        @endif
 
         <a class="btn btn-secondary" href="javascript: history.go(-1)">Annulla</a>
 

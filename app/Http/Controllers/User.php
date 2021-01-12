@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class User extends Controller
 {
@@ -27,7 +28,7 @@ class User extends Controller
      */
     public function create()
     {
-        //
+        return view('users.form');
     }
 
     /**
@@ -38,7 +39,13 @@ class User extends Controller
      */
     public function store(Request $request)
     {
-        //
+        \App\User::create([
+            'name' => $request->input('name'),
+            'email' => $request->input('email'),
+            'password' => Hash::make($request->input('password')),
+        ]);
+
+        return redirect()->route('users');
     }
 
     /**
