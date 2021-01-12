@@ -60,7 +60,11 @@ class User extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = \App\Model\User::find($id);
+
+        return view('users.form', [
+            'user' => $user
+        ]);
     }
 
     /**
@@ -72,7 +76,12 @@ class User extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user = \App\Model\User::find($id);
+        $user->name = $request->input('name');
+        $user->email = $request->input('email');
+        $user->save();
+
+        return redirect()->route('users');
     }
 
     /**

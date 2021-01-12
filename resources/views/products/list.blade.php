@@ -1,38 +1,28 @@
-@extends('layouts.app')
+@extends('layouts.card')
 
-@section('content')
-    <div class="container">
+@section('card-body')
 
-        <div class="card">
-            <div class="card-header">{{ __('navbar.products') }}</div>
+    <table class="table table-striped table-hover">
+        <thead>
+        <tr>
+            <th>{{ __('products.cod') }}</th>
+            <th>{{ __('products.desc') }}</th>
+        </tr>
+        </thead>
+        <tbody>
 
-            <div class="card-body">
+        @foreach($products as $product)
 
-                <table class="table table-striped table-hover">
-                    <thead>
-                    <tr>
-                        <th>{{ __('products.cod') }}</th>
-                        <th>{{ __('products.desc') }}</th>
-                    </tr>
-                    </thead>
-                    <tbody>
+            <tr>
+                <td>{{ $product->cod }}</td>
+                <td>{{ $product->desc }}</td>
+            </tr>
 
-                    @foreach($products as $product)
+        @endforeach
 
-                        <tr>
-                            <td>{{ $product->cod }}</td>
-                            <td>{{ $product->desc }}</td>
-                        </tr>
+        </tbody>
+    </table>
 
-                    @endforeach
+    {{ $products->links() }}
 
-                    </tbody>
-                </table>
-
-                {{ $products->links() }}
-
-            </div>
-        </div>
-
-    </div>
 @endsection

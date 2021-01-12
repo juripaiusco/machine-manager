@@ -1,0 +1,8 @@
+.col.nopadding {
+    padding-right: 5px !important;
+    padding-left: 5px !important;
+}
+.row.nopadding {
+    padding-right: 10px !important;
+    padding-left: 10px !important;
+}

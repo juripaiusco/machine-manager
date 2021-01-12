@@ -19,4 +19,7 @@ Route::get('/', 'HomeController@index');
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/users', 'User@index')->name('users');
+Route::get('/users/edit/{id}', 'User@edit')->name('users.edit');
+Route::post('/users/update/{id}', 'User@update')->name('users.update');
+
 Route::get('/products', 'Product@index')->name('products');

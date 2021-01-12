@@ -1,44 +1,43 @@
-@extends('layouts.app')
+@extends('layouts.card')
 
-@section('content')
-    <div class="container">
+@section('card-body')
 
-        <div class="card">
-            <div class="card-header">{{ __('navbar.users') }}</div>
+    <table class="table table-striped table-hover">
+        <thead>
+        <tr>
+            <th>{{ __('users.name') }}</th>
+            <th>{{ __('users.email') }}</th>
+            <th width="160"></th>
+        </tr>
+        </thead>
+        <tbody>
 
-            <div class="card-body">
+        @foreach($users as $user)
 
-                <table class="table table-striped table-hover">
-                    <thead>
-                    <tr>
-                        <th>{{ __('users.name') }}</th>
-                        <th>{{ __('users.email') }}</th>
-                        <th></th>
-                    </tr>
-                    </thead>
-                    <tbody>
+            <tr>
+                <td class="align-middle">{{ $user->name }}</td>
+                <td class="align-middle">{{ $user->email }}</td>
+                <td class="text-right">
 
-                    @foreach($users as $user)
+                    <div class="row nopadding">
+                        <div class="col nopadding">
+                            <a href="{{ route('users.edit', $user->id) }}" class="btn btn-block btn-info">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                        </div>
+                        <div class="col nopadding">
+                            <a href="#" class="btn btn-block btn-danger">
+                                <i class="fas fa-trash-alt"></i>
+                            </a>
+                        </div>
+                    </div>
 
-                        <tr>
-                            <td>{{ $user->name }}</td>
-                            <td>{{ $user->email }}</td>
-                            <td class="text-right">
+                </td>
+            </tr>
 
-                                <a href="#" class="btn btn-danger">Del</a>
+        @endforeach
 
-                            </td>
-                        </tr>
+        </tbody>
+    </table>
 
-                    @endforeach
-
-                    </tbody>
-                </table>
-
-{{--                {{ $products->links() }}--}}
-
-            </div>
-        </div>
-
-    </div>
 @endsection
