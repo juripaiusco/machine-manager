@@ -35,4 +35,5 @@ yarn-error.log
 .idea
 .DS_Store
 
-public/fortawesome
+/public/fortawesome
+/public/fonts
