@@ -21,5 +21,6 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/users', 'User@index')->name('users');
 Route::get('/users/edit/{id}', 'User@edit')->name('users.edit');
 Route::post('/users/update/{id}', 'User@update')->name('users.update');
+Route::get('/users/delete/{id}', 'User@destroy')->name('users.destroy');
 
 Route::get('/products', 'Product@index')->name('products');

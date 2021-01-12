@@ -92,6 +92,8 @@ class User extends Controller
      */
     public function destroy($id)
     {
-        //
+        \App\Model\User::destroy($id);
+
+        return redirect()->route('users');
     }
 }
