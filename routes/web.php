@@ -18,6 +18,11 @@ Auth::routes();
 Route::get('/', 'HomeController@index');
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::get('/machines', 'Machine@index')->name('machines');
+Route::get('/machines/create', 'Machine@create')->name('machines.create');
+Route::post('/machines/store', 'Machine@store')->name('machines.store');
+Route::get('/machines/search', 'Machine@search')->name('machines.search');
+
 Route::get('/users', 'User@index')->name('users');
 Route::get('/users/create', 'User@create')->name('users.create');
 Route::post('/users/store', 'User@store')->name('users.store');

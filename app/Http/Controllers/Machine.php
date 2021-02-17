@@ -3,9 +3,20 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
-class Distinta extends Controller
+class Machine extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -13,7 +24,11 @@ class Distinta extends Controller
      */
     public function index()
     {
-//        print_r($this->dataImportToDB());
+        $machines = \App\Model\Machine::get();
+
+        return view('machines.list', [
+            'machines' => $machines
+        ]);
     }
 
     /**
@@ -23,7 +38,12 @@ class Distinta extends Controller
      */
     public function create()
     {
-        //
+        $json = Storage::disk('public')->get('machines_json/atomizzatori_trainati.json');
+        $fields_obj = json_decode($json);
+
+        return view('machines.form', [
+            'fields_obj' => $fields_obj
+        ]);
     }
 
     /**
@@ -80,5 +100,19 @@ class Distinta extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function search(Request $request)
+    {
+        $products = \App\Model\Product::where('cod', 'LIKE', $request->input('cod') . '%')
+                                      ->where('desc', 'LIKE', '%' . $request->input('q') . '%')
+                                      ->get();
+
+        foreach ($products as $product) {
+
+            echo $product->cod . '<br>';
+            echo $product->desc . '<br>';
+
+        }
     }
 }

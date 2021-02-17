@@ -4,7 +4,7 @@
     <div class="container">
 
         <div class="card">
-            <div class="card-header">{{ __('navbar.users') }}</div>
+            <div class="card-header">{{ __('navbar.' . Request::segment(1)) }}</div>
 
             <div class="card-body">
 

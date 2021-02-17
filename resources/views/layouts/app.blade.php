@@ -36,6 +36,9 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
                         @if (Auth::check())
+                            <li class="nav-item {{ Route::is('machines') ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ route('machines') }}">{{ __('navbar.machines') }}</a>
+                            </li>
                             <li class="nav-item {{ Route::is('users') ? 'active' : '' }}">
                                 <a class="nav-link" href="{{ route('users') }}">{{ __('navbar.users') }}</a>
                             </li>
