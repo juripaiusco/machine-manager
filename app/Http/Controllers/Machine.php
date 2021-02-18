@@ -106,13 +106,9 @@ class Machine extends Controller
     {
         $products = \App\Model\Product::where('cod', 'LIKE', $request->input('cod') . '%')
                                       ->where('desc', 'LIKE', '%' . $request->input('q') . '%')
+                                      ->take(5)
                                       ->get();
 
-        foreach ($products as $product) {
-
-            echo $product->cod . '<br>';
-            echo $product->desc . '<br>';
-
-        }
+        echo json_encode($products);
     }
 }

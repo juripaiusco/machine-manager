@@ -2,6 +2,26 @@
 
 @section('card-body')
 
+    <style>
+        .result-container {
+            border: 1px solid #ddd;
+            background-color: white;
+            position: absolute;
+            width: calc(100% - 30px);
+        }
+        .result-item {
+            padding: 5px;
+            border-bottom: 1px solid #ddd;
+            cursor: pointer;
+        }
+        .result-item .cod {
+            font-size: 10px;
+        }
+        .result-item:hover {
+            background-color: #eee;
+        }
+    </style>
+
     <script language="JavaScript">
 
         function showResult(obj, cod) {
@@ -10,7 +30,25 @@
                 url: './search/?q=' + obj.value + '&cod=' + cod
             }).done(function (data) {
 
-                $('#' + obj.id + 'Result').html(data);
+                var json = $.parseJSON(data);
+                var ObjResult = $('#' + obj.id + 'Result');
+
+                ObjResult.html('');
+
+                if (obj.value != '') {
+
+                    $.each(json, function (i, item) {
+
+                        var itemHTML = '<div class="result-item" data-cod="' + item.cod + '">';
+                        itemHTML += '<span class="cod">' + item.cod + '</span><br>';
+                        itemHTML += item.desc;
+                        itemHTML += '</div>';
+
+                        ObjResult.append(itemHTML);
+
+                    });
+
+                }
 
             });
 
@@ -18,7 +56,11 @@
 
         window.onload = function() {
 
+            $('.result-container').on('click', '.result-item', function () {
 
+                alert($(this).data('cod'));
+
+            });
 
         };
 
@@ -190,12 +232,16 @@
                                    placeholder="Ricerca prodotti {{ $field->search_cod }}*"
                                    onkeyup="showResult(this, '{{ $field->search_cod }}')"
                                    @endif
+
                                    name="{{ preg_replace("/[^a-zA-Z0-9_]+/", "", strtolower(str_replace(' ', '_', $field->name))) }}"
                                    value="{{ isset($machine->id) ? $machine->quantity : '' }}">
 
                             @if($field->search_cod != 'null')
 
-                                <div id="{{ preg_replace("/[^a-zA-Z0-9_]+/", "", strtolower(str_replace(' ', '_', $field->name))) }}Result"></div>
+                                <input type="hidden">
+                            
+                                <div class="result-container"
+                                     id="{{ preg_replace("/[^a-zA-Z0-9_]+/", "", strtolower(str_replace(' ', '_', $field->name))) }}Result"></div>
 
                             @endif
 
