@@ -34,7 +34,7 @@
             <tr>
                 <td class="align-middle">{{ $machine->name }}</td>
                 <td class="align-middle">{{ $machine->customer }}</td>
-                <td class="align-middle">{{ $machine->date_machine }}</td>
+                <td class="align-middle">{{ date('d/m/Y', strtotime($machine->date_machine)) }}</td>
                 <td class="text-right">
 
                     <div class="row nopadding">

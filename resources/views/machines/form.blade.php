@@ -8,6 +8,7 @@
             background-color: white;
             position: absolute;
             width: calc(100% - 30px);
+            display: none;
         }
         .result-item {
             padding: 5px;
@@ -27,19 +28,22 @@
         function showResult(obj, cod) {
 
             $.ajax({
-                url: './search/?q=' + obj.value + '&cod=' + cod
+                url: '{{ asset('machines') }}/search/?q=' + obj.value + '&cod=' + cod
             }).done(function (data) {
 
                 var json = $.parseJSON(data);
                 var ObjResult = $('#' + obj.id + 'Result');
 
+                ObjResult.css('display', 'none');
                 ObjResult.html('');
 
                 if (obj.value != '') {
 
+                    ObjResult.css('display', 'block');
+
                     $.each(json, function (i, item) {
 
-                        var itemHTML = '<div class="result-item" data-cod="' + item.cod + '">';
+                        var itemHTML = '<div class="result-item" data-cod="' + item.cod + '" data-desc="' + item.desc + '">';
                         itemHTML += '<span class="cod">' + item.cod + '</span><br>';
                         itemHTML += item.desc;
                         itemHTML += '</div>';
@@ -58,7 +62,14 @@
 
             $('.result-container').on('click', '.result-item', function () {
 
-                alert($(this).data('cod'));
+                var ObjItem = $(this).closest('.form-group');
+                var ObjHiddenValue = ObjItem.find('.hiddenValue');
+                var ObjViewValue = ObjItem.find('.form-control');
+                var ObjResult = ObjItem.find('.result-container');
+
+                ObjHiddenValue.val($(this).data('cod'));
+                ObjViewValue.val($(this).data('desc'));
+                ObjResult.css('display', 'none');
 
             });
 
@@ -66,7 +77,9 @@
 
     </script>
 
-    <form method="post" action="{{ isset($machine->id) ? route('machines.update', $machine->id) : route('machines.store') }}">
+    <form method="post"
+          action="{{ isset($machine->id) ? route('machines.update', $machine->id) : route('machines.store') }}"
+          autocomplete="off">
 
         @csrf
 
@@ -78,14 +91,27 @@
 
                         <div class="form-group">
 
+                            @php
+                            $type_array = array(
+	                            'Atomizzatori trainati',
+                                'Atomizzatori portati',
+                                'Polverizzatori semiportati',
+                                'Polverizzatori portati',
+                                'Gruppo portato'
+	                        );
+                            @endphp
+
                             <label for="type">Tipologia</label>
-                            <select class="form-control" id="type">
+                            <select class="form-control" id="type" name="type">
+
                                 <option value="">Seleziona Tipologia</option>
-                                <option value="Atomizzatori trainati">Atomizzatori trainati</option>
-                                <option value="Atomizzatori portati">Atomizzatori portati</option>
-                                <option value="Polverizzatori semiportati">Polverizzatori semiportati</option>
-                                <option value="Polverizzatori portati">Polverizzatori portati</option>
-                                <option value="Gruppo portato">Gruppo portato</option>
+
+                                @foreach($type_array as $type)
+                                    <option value="{{ $type }}"
+                                    @if(isset($machine->type) && $machine->type == $type)
+                                    selected
+                                    @endif>{{ $type }}</option>
+                                @endforeach
 
                             </select>
 
@@ -127,7 +153,7 @@
                                    id="date_machine"
                                    placeholder="Data"
                                    name="date_machine"
-                                   value="{{ isset($machine->id) ? $machine->date_machine : date('d/m/Y') }}">
+                                   value="{{ isset($machine->id) ? date('d/m/Y', strtotime($machine->date_machine)) : date('d/m/Y') }}">
                         </div>
 
                     </div>
@@ -200,6 +226,10 @@
 
             @foreach($fields_obj as $field)
 
+                @php
+                    $field_name = preg_replace("/[^a-zA-Z0-9_]+/", "", strtolower(str_replace(' ', '_', $field->name)))
+                @endphp
+
                 <div class="col-lg-3">
 
                     @switch($field->type)
@@ -209,9 +239,13 @@
                         <div class="custom-control custom-switch">
                             <input type="checkbox"
                                    class="custom-control-input"
-                                   id="{{ preg_replace("/[^a-zA-Z0-9_]+/", "", strtolower(str_replace(' ', '_', $field->name))) }}">
+                                   id="{{ $field_name }}"
+                                   name="json[{{ $field_name }}]"
+                                   @if(isset($json[$field_name]) && $json[$field_name] == 'on')
+                                   checked
+                                    @endif>
                             <label class="custom-control-label"
-                                   for="{{ preg_replace("/[^a-zA-Z0-9_]+/", "", strtolower(str_replace(' ', '_', $field->name))) }}">
+                                   for="{{ $field_name }}">
                                 {{ $field->name }}
                             </label>
                         </div>
@@ -221,27 +255,38 @@
                         @default
 
                         <div class="form-group">
-                            <label for="{{ preg_replace("/[^a-zA-Z0-9_]+/", "", strtolower(str_replace(' ', '_', $field->name))) }}">
+                            <label for="{{ $field_name }}">
                                 {{ $field->name }}
                             </label>
                             <input type="text"
                                    class="form-control text-center"
-                                   id="{{ preg_replace("/[^a-zA-Z0-9_]+/", "", strtolower(str_replace(' ', '_', $field->name))) }}"
+                                   id="{{ $field_name }}"
+                                   autocomplete="off"
 
                                    @if($field->search_cod != 'null')
-                                   placeholder="Ricerca prodotti {{ $field->search_cod }}*"
-                                   onkeyup="showResult(this, '{{ $field->search_cod }}')"
-                                   @endif
 
-                                   name="{{ preg_replace("/[^a-zA-Z0-9_]+/", "", strtolower(str_replace(' ', '_', $field->name))) }}"
-                                   value="{{ isset($machine->id) ? $machine->quantity : '' }}">
+                                    placeholder="Ricerca prodotti {{ $field->search_cod }}*"
+                                    onkeyup="showResult(this, '{{ $field->search_cod }}')"
+                                    name="json[{{ $field_name }}][label]"
+                                    value="{{ isset($json[$field_name]['label']) ? $json[$field_name]['label'] : '' }}"
+
+                                   @else
+
+                                    name="json[{{ $field_name }}]"
+                                    value="{{ isset($json[$field_name]) ? $json[$field_name] : '' }}"
+
+                                   @endif
+                            >
 
                             @if($field->search_cod != 'null')
 
-                                <input type="hidden">
-                            
+                                <input type="hidden"
+                                       class="hiddenValue"
+                                       name="json[{{ $field_name }}][cod]"
+                                       value="{{ isset($json[$field_name]['cod']) ? $json[$field_name]['cod'] : '' }}">
+
                                 <div class="result-container"
-                                     id="{{ preg_replace("/[^a-zA-Z0-9_]+/", "", strtolower(str_replace(' ', '_', $field->name))) }}Result"></div>
+                                     id="{{ $field_name }}Result"></div>
 
                             @endif
 

@@ -54,7 +54,27 @@ class Machine extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $machine = new \App\Model\Machine();
+
+        $machine->type = $request->input('type');
+        $machine->year = $request->input('year');
+        $machine->number = $request->input('number');
+        $machine->author = $request->input('author');
+        $machine->name = $request->input('name');
+        $machine->n_confirm = $request->input('n_confirm');
+        $machine->quantity = $request->input('quantity');
+        $machine->date_machine = date(
+            'Ymd',
+            strtotime(
+                str_replace('/', '-', $request->input('date_machine'))
+            )) . '000000';
+        $machine->customer = $request->input('customer');
+
+        $machine->json = json_encode($request->input('json'));
+
+        $machine->save();
+
+        return redirect()->route('machines');
     }
 
     /**
@@ -76,7 +96,16 @@ class Machine extends Controller
      */
     public function edit($id)
     {
-        //
+        $json = Storage::disk('public')->get('machines_json/atomizzatori_trainati.json');
+        $fields_obj = json_decode($json);
+
+        $machine = \App\Model\Machine::find($id);
+
+        return view('machines.form', [
+            'machine' => $machine,
+            'json' => json_decode($machine->json, true),
+            'fields_obj' => $fields_obj
+        ]);
     }
 
     /**
@@ -88,7 +117,27 @@ class Machine extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $machine = \App\Model\Machine::find($id);
+
+        $machine->type = $request->input('type');
+        $machine->year = $request->input('year');
+        $machine->number = $request->input('number');
+        $machine->author = $request->input('author');
+        $machine->name = $request->input('name');
+        $machine->n_confirm = $request->input('n_confirm');
+        $machine->quantity = $request->input('quantity');
+        $machine->date_machine = date(
+                                     'Ymd',
+                                     strtotime(
+                                         str_replace('/', '-', $request->input('date_machine'))
+                                     )) . '000000';
+        $machine->customer = $request->input('customer');
+
+        $machine->json = json_encode($request->input('json'));
+
+        $machine->save();
+
+        return redirect()->route('machines');
     }
 
     /**
@@ -99,7 +148,9 @@ class Machine extends Controller
      */
     public function destroy($id)
     {
-        //
+        \App\Model\Machine::destroy($id);
+
+        return redirect()->route('machines');
     }
 
     public function search(Request $request)

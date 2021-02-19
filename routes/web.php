@@ -21,6 +21,9 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/machines', 'Machine@index')->name('machines');
 Route::get('/machines/create', 'Machine@create')->name('machines.create');
 Route::post('/machines/store', 'Machine@store')->name('machines.store');
+Route::get('/machines/edit/{id}', 'Machine@edit')->name('machines.edit');
+Route::post('/machines/update/{id}', 'Machine@update')->name('machines.update');
+Route::get('/machines/delete/{id}', 'Machine@destroy')->name('machines.destroy');
 Route::get('/machines/search', 'Machine@search')->name('machines.search');
 
 Route::get('/users', 'User@index')->name('users');
