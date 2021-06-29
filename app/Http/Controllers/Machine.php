@@ -156,9 +156,17 @@ class Machine extends Controller
     public function search(Request $request)
     {
         $products = \App\Model\Product::where('cod', 'LIKE', $request->input('cod') . '%')
-                                      ->where('desc', 'LIKE', '%' . $request->input('q') . '%')
+                                      ->where(function ($query) use ($request) {
+                                          $query->where('desc', 'LIKE', '%' . $request->input('q') . '%')
+                                                ->orWhere('cod', 'LIKE', '%' . $request->input('q') . '%');
+                                        })
                                       ->take(5)
                                       ->get();
+
+        /*$products = \App\Model\Product::where('cod', 'LIKE', $request->input('cod') . '%')
+                                      ->where('desc', 'LIKE', '%' . $request->input('q') . '%')
+                                      ->take(5)
+                                      ->get();*/
 
         echo json_encode($products);
     }
