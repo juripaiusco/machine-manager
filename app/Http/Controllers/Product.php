@@ -69,6 +69,7 @@ class Product extends Controller
 
             $dataSet[] = array(
                 'cod' => $d->cod,
+                'name' => $d->des,
                 'desc' => $d->des
             );
 

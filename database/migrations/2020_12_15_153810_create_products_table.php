@@ -17,7 +17,9 @@ class CreateProductsTable extends Migration
             $table->id();
 
             $table->char('cod', 14);
-            $table->longText('desc');
+            $table->char('name', 255);
+            $table->longText('desc')->nullable();
+            $table->float('price')->nullable();
 
             $table->timestamps();
         });
