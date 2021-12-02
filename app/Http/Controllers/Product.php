@@ -49,7 +49,7 @@ class Product extends Controller
 
         }
 
-        $products = \App\Model\Product::paginate(10);
+        $products = \App\Model\Product::orderBy('id', 'DESC')->paginate(10);
 
         return $products;
     }
@@ -99,7 +99,14 @@ class Product extends Controller
      */
     public function store(Request $request)
     {
-        //
+        \App\Model\Product::create([
+            'cod' => $request->input('cod'),
+            'name' => $request->input('name'),
+            'desc' => $request->input('desc'),
+            'price' => str_replace(',', '.', $request->input('price')),
+        ]);
+
+        return redirect()->route('products');
     }
 
     /**
