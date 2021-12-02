@@ -87,7 +87,7 @@ class Product extends Controller
      */
     public function create()
     {
-        //
+        return view('products.form');
     }
 
     /**

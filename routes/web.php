@@ -34,3 +34,8 @@ Route::post('/users/update/{id}', 'User@update')->name('users.update');
 Route::get('/users/delete/{id}', 'User@destroy')->name('users.destroy');
 
 Route::get('/products', 'Product@index')->name('products');
+Route::get('/products/create', 'Product@create')->name('products.create');
+Route::post('/products/store', 'Product@store')->name('products.store');
+Route::get('/products/edit/{id}', 'Product@edit')->name('products.edit');
+Route::post('/products/update/{id}', 'Product@update')->name('products.update');
+Route::get('/products/delete/{id}', 'Product@destroy')->name('products.destroy');
