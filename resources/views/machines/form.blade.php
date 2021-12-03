@@ -9,6 +9,7 @@
             position: absolute;
             width: calc(100% - 30px);
             display: none;
+            z-index: 1000;
         }
         .result-item {
             padding: 5px;
@@ -43,7 +44,11 @@
 
                     $.each(json, function (i, item) {
 
-                        var itemHTML = '<div class="result-item" data-cod="' + item.cod + '" data-desc="' + item.desc + '">';
+                        var itemHTML = '<div class="result-item"' +
+                            'data-cod="' + item.cod + '"' +
+                            'data-desc="' + item.desc + '"' +
+                            'data-sub_element="' + item.sub_element + '"' +
+                        '>';
                         itemHTML += '<span class="cod">' + item.cod + '</span><br>';
                         itemHTML += item.desc;
                         itemHTML += '</div>';
@@ -70,6 +75,12 @@
                 ObjHiddenValue.val($(this).data('cod'));
                 ObjViewValue.val($(this).data('desc'));
                 ObjResult.css('display', 'none');
+
+                /*if ( $(this).data('sub_element') != null ) {
+
+                    ObjItem.after(ObjItem.clone());
+
+                }*/
 
             });
 
@@ -254,43 +265,10 @@
 
                         @default
 
-                        <div class="form-group">
-                            <label for="{{ $field_name }}">
-                                {{ $field->name }}
-                            </label>
-                            <input type="text"
-                                   class="form-control text-center"
-                                   id="{{ $field_name }}"
-                                   autocomplete="off"
-
-                                   @if($field->search_cod != 'null')
-
-                                    placeholder="Ricerca prodotti {{ $field->search_cod }}*"
-                                    onkeyup="showResult(this, '{{ $field->search_cod }}')"
-                                    name="json[{{ $field_name }}][label]"
-                                    value="{{ isset($json[$field_name]['label']) ? $json[$field_name]['label'] : '' }}"
-
-                                   @else
-
-                                    name="json[{{ $field_name }}]"
-                                    value="{{ isset($json[$field_name]) ? $json[$field_name] : '' }}"
-
-                                   @endif
-                            >
-
-                            @if($field->search_cod != 'null')
-
-                                <input type="hidden"
-                                       class="hiddenValue"
-                                       name="json[{{ $field_name }}][cod]"
-                                       value="{{ isset($json[$field_name]['cod']) ? $json[$field_name]['cod'] : '' }}">
-
-                                <div class="result-container"
-                                     id="{{ $field_name }}Result"></div>
-
-                            @endif
-
-                        </div>
+                        <x-form-group-text
+                            :fieldName="$field_name"
+                            :field="$field"
+                            :json="$json ?? ''" />
 
                     @endswitch
 
