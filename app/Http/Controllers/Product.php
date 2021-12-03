@@ -128,7 +128,11 @@ class Product extends Controller
      */
     public function edit($id)
     {
-        //
+        $product = \App\Model\Product::find($id);
+
+        return view('products.form', [
+            'product' => $product
+        ]);
     }
 
     /**
@@ -140,7 +144,11 @@ class Product extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $product = \App\Model\Product::find($id);
+        $product->name = $request->input('name');
+        $product->save();
+
+        return redirect()->route('products');
     }
 
     /**

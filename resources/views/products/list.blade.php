@@ -22,7 +22,7 @@
         <thead>
         <tr>
             <th>{{ __('products.cod') }}</th>
-            <th>{{ __('products.desc') }}</th>
+            <th>{{ __('products.name') }}</th>
             <th width="160"></th>
         </tr>
         </thead>
@@ -32,7 +32,7 @@
 
             <tr>
                 <td>{{ $product->cod }}</td>
-                <td>{{ $product->desc }}</td>
+                <td>{{ $product->name }}</td>
                 <td class="text-right">
 
                     <div class="row nopadding">
