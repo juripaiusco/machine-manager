@@ -64,6 +64,16 @@
 
         </div>
 
+        <div class="form-group">
+            <label for="name">Connetti sotto elemento</label>
+            <input type="text"
+                   class="form-control"
+                   id="sub_element"
+                   placeholder="Codice prodotto sotto elemento es.: T0"
+                   name="sub_element"
+                   value="{{ isset($product->id) ? $product->sub_element : '' }}">
+        </div>
+
         <a class="btn btn-secondary" href="javascript: history.go(-1)">Annulla</a>
 
         <button type="submit"

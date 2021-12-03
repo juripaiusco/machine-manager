@@ -116,6 +116,7 @@ class Product extends Controller
             'name' => $request->input('name'),
             'desc' => $request->input('desc'),
             'price' => str_replace(',', '.', $request->input('price')),
+            'sub_element' => $request->input('sub_element'),
         ]);
 
         return redirect()->route('products');
@@ -161,6 +162,7 @@ class Product extends Controller
         $product->name = $request->input('name');
         $product->desc = $request->input('desc');
         $product->price = str_replace(',', '.', $request->input('price'));
+        $product->sub_element = $request->input('sub_element');
         $product->save();
 
         return redirect()->route('products');

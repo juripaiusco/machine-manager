@@ -20,6 +20,7 @@ class CreateProductsTable extends Migration
             $table->char('name', 255);
             $table->longText('desc')->nullable();
             $table->float('price')->nullable();
+            $table->char('sub_element', 255)->nullable();
 
             $table->timestamps();
         });
