@@ -26,12 +26,13 @@ class Product extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $products = $this->getData();
+        $products = $this->getData($request);
 
         return view('products.list', [
-            'products' => $products
+            'products' => $products,
+            's' => $request->input('s')
         ]);
     }
 
@@ -41,7 +42,7 @@ class Product extends Controller
      * @return mixed
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
-    private function getData()
+    private function getData(Request $request)
     {
         if (Storage::disk('public')->exists($this->jsonFileName)) {
 
@@ -49,7 +50,10 @@ class Product extends Controller
 
         }
 
-        $products = \App\Model\Product::orderBy('id', 'DESC')->paginate(10);
+        $products = \App\Model\Product::where('cod', 'LIKE', '%' . $request->input('s') . '%')
+            ->orWhere('name', 'LIKE', '%' . $request->input('s') . '%')
+            ->orderBy('id', 'DESC')
+            ->paginate(10);
 
         return $products;
     }
@@ -61,11 +65,15 @@ class Product extends Controller
      */
     private function dataImportToDB()
     {
-        $dataJSON = Storage::disk('public')->get($this->jsonFileName);
+        /*$dataJSON = Storage::disk('public')->get($this->jsonFileName);
         $dataArray = json_decode($dataJSON);
         $dataSet = array();
 
         foreach ($dataArray as $d) {
+
+            $product = \App\Model\Product::where('cod', $d->cod)->first();
+
+            dd($product);
 
             $dataSet[] = array(
                 'cod' => $d->cod,
@@ -78,7 +86,7 @@ class Product extends Controller
         DB::table($this->tblName)->truncate();
         DB::table($this->tblName)->insert($dataSet);
 
-        Storage::disk('public')->delete($this->jsonFileName);
+        Storage::disk('public')->delete($this->jsonFileName);*/
     }
 
     /**
