@@ -65,7 +65,7 @@ class Product extends Controller
      */
     private function dataImportToDB()
     {
-        /*$dataJSON = Storage::disk('public')->get($this->jsonFileName);
+        $dataJSON = Storage::disk('public')->get($this->jsonFileName);
         $dataArray = json_decode($dataJSON);
         $dataSet = array();
 
@@ -73,20 +73,24 @@ class Product extends Controller
 
             $product = \App\Model\Product::where('cod', $d->cod)->first();
 
-            dd($product);
+            if (!isset($product->id)) {
 
-            $dataSet[] = array(
-                'cod' => $d->cod,
-                'name' => $d->des,
-                'desc' => $d->des
-            );
+                $product = new \App\Model\Product();
+
+            }
+
+            $product->cod = $d->cod;
+            $product->name = $d->des;
+            $product->desc = $d->des;
+
+            $product->save();
 
         }
 
-        DB::table($this->tblName)->truncate();
-        DB::table($this->tblName)->insert($dataSet);
+        /*DB::table($this->tblName)->truncate();
+        DB::table($this->tblName)->insert($dataSet);*/
 
-        Storage::disk('public')->delete($this->jsonFileName);*/
+        Storage::disk('public')->delete($this->jsonFileName);
     }
 
     /**
@@ -153,7 +157,10 @@ class Product extends Controller
     public function update(Request $request, $id)
     {
         $product = \App\Model\Product::find($id);
+        $product->cod = $request->input('cod');
         $product->name = $request->input('name');
+        $product->desc = $request->input('desc');
+        $product->price = str_replace(',', '.', $request->input('price'));
         $product->save();
 
         return redirect()->route('products');

@@ -45,7 +45,7 @@
                                id="price"
                                placeholder="123,00"
                                name="price"
-                               value="{{ isset($product->id) ? $product->price : '' }}">
+                               value="{{ isset($product->id) ? number_format($product->price, 2, ',', '') : '' }}">
 
                     </div>
                 </div>
