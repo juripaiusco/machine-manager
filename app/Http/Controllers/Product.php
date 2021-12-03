@@ -159,6 +159,8 @@ class Product extends Controller
      */
     public function destroy($id)
     {
-        //
+        \App\Model\Product::destroy($id);
+
+        return redirect()->route('products');
     }
 }
