@@ -241,7 +241,7 @@
                     $field_name = preg_replace("/[^a-zA-Z0-9_]+/", "", strtolower(str_replace(' ', '_', $field->name)))
                 @endphp
 
-                <div class="col-lg-3">
+                <div class="col-lg-6">
 
                     @switch($field->type)
 
