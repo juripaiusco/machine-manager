@@ -70,9 +70,15 @@
             </button>
         </p>
 
-        <div class="collapse @if($product->conn_element_search_code != '') show @endif" id="collapseSubElement">
+        <div class="collapse @if(isset($product->id))
+        @if($product->conn_element_search_code != '') show @endif
+        @endif" id="collapseSubElement">
 
-            <div class="card @if($product->conn_element_search_code != '') bg-success @else bg-info @endif text-white">
+            <div class="card text-white @if(isset($product->id))
+                {{ $product->conn_element_search_code != '' ? 'bg-success' : 'bg-info' }}
+            @else
+                bg-info
+            @endif">
                 <div class="card-header">Dettagli di connessione</div>
                 <div class="card-body">
 
