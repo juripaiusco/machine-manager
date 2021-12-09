@@ -34,6 +34,7 @@
 
                 var json = $.parseJSON(data);
                 var ObjResult = $('#' + obj.id + 'Result');
+                var ObjFormGroup = $('#' + obj.id).closest('.form-group');
 
                 ObjResult.css('display', 'none');
                 ObjResult.html('');
@@ -47,13 +48,28 @@
                         var itemHTML = '<div class="result-item"' +
                             'data-cod="' + item.cod + '"' +
                             'data-desc="' + item.desc + '"' +
-                            'data-sub_element="' + item.sub_element + '"' +
+                            'data-conn_element_name="' + item.conn_element_name + '"' +
+                            'data-conn_element_search_code="' + item.conn_element_search_code + '"' +
                         '>';
                         itemHTML += '<span class="cod">' + item.cod + '</span><br>';
                         itemHTML += item.desc;
                         itemHTML += '</div>';
 
                         ObjResult.append(itemHTML);
+
+                        $('.result-container').on('click', '.result-item', function () {
+
+                            if( ObjFormGroup.hasClass('conn_element') == false ) {
+
+                                ObjFormGroup.closest('.form-element')
+                                    .find('.conn_element')
+                                    .remove();
+
+                            }
+
+                            clickResultItem($(this));
+
+                        });
 
                     });
 
@@ -63,32 +79,74 @@
 
         }
 
-        window.onload = function() {
+        function clickResultItem(Obj) {
 
-            $('.result-container').on('click', '.result-item', function () {
+            var ObjItem = Obj.closest('.form-group');
+            var ObjHiddenValue = ObjItem.find('.hiddenValue');
+            var ObjViewValue = ObjItem.find('.form-control');
+            var ObjResult = ObjItem.find('.result-container');
 
-                var ObjItem = $(this).closest('.form-group');
-                var ObjHiddenValue = ObjItem.find('.hiddenValue');
-                var ObjViewValue = ObjItem.find('.form-control');
-                var ObjResult = ObjItem.find('.result-container');
+            var Data_connElementName = Obj.data('conn_element_name');
+            var Data_connElementSearchCode = Obj.data('conn_element_search_code');
 
-                ObjHiddenValue.val($(this).data('cod'));
-                ObjViewValue.val($(this).data('desc'));
-                ObjResult.css('display', 'none');
+            ObjHiddenValue.val(Obj.data('cod'));
+            ObjViewValue.val(Obj.data('desc'));
+            ObjResult.css('display', 'none');
 
-                if ( $(this).data('sub_element') != null ) {
+            if ( Data_connElementSearchCode != null ) {
 
-                    alert($(this).data('sub_element'));
-                    var ObjClone = ObjItem.clone();
+                var ObjClone = ObjItem.clone();
+                var field_name = Data_connElementName.replace(/[^a-zA-Z0-9_]+/g, '').toLowerCase();
+
+                if ( $('#' + field_name).length == 0 ) {
+
+                    ObjClone.addClass('conn_element');
+
+                    ObjClone.find('label')
+                        .attr('for', field_name)
+                        .html(Data_connElementName);
+
+                    ObjClone.find('input[type="text"]')
+                        .attr('id', field_name)
+                        .attr('placeholder', 'Ricerca prodotti ' + Data_connElementSearchCode + '*')
+                        .attr('name', 'json[' + field_name + '][label]')
+                        .attr('onkeyup', 'showResult(this, "' + Data_connElementSearchCode + '")')
+                        .val('');
+
+                    ObjClone.find('input[type="hidden"]')
+                        .attr('name', 'json[' + field_name + '][cod]')
+                        .val('');
+
+                    ObjClone.find('.result-container')
+                        .attr('id', field_name + 'Result')
+                        .html('');
 
                     ObjItem.after(ObjClone);
-                    ObjClone.css('border', '1px solid red');
+
+                    ObjClone.find('input[type="text"]').focus();
+
+                    ObjItem.closest('.form-element')
+                        .css({
+                            'background-color': '#eee',
+                            'padding': '15px 15px 5px 15px',
+                            'border-radius': '6px',
+                        });
 
                 }
 
+            }
+
+        }
+
+        /*window.onload = function() {
+
+            $('.result-container').on('click', '.result-item', function () {
+
+                clickResultItem($(this));
+
             });
 
-        };
+        };*/
 
     </script>
 

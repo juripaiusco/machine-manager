@@ -1,4 +1,4 @@
-<div>
+<div class="form-element">
 
     <div class="form-group">
         <label for="{{ $field_name }}">
@@ -38,13 +38,13 @@
 
     </div>
 
-    @if(isset($field->sub_element))
+    {{--@if(isset($field->sub_element))
 
         <x-form-group-text
             :fieldName="$field->sub_element->name"
             :field="$field->sub_element"
             :json="$json ?? ''" />
 
-    @endif
+    @endif--}}
 
 </div>
