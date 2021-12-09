@@ -22,6 +22,11 @@
         .result-item:hover {
             background-color: #eee;
         }
+        .form-element-group {
+            background-color: #eee;
+            padding: 15px 15px 5px 15px;
+            border-radius: 6px;
+        }
     </style>
 
     <script language="JavaScript">
@@ -127,27 +132,13 @@
                     ObjClone.find('input[type="text"]').focus();
 
                     ObjItem.closest('.form-element')
-                        .css({
-                            'background-color': '#eee',
-                            'padding': '15px 15px 5px 15px',
-                            'border-radius': '6px',
-                        });
+                        .addClass('form-element-group');
 
                 }
 
             }
 
         }
-
-        /*window.onload = function() {
-
-            $('.result-container').on('click', '.result-item', function () {
-
-                clickResultItem($(this));
-
-            });
-
-        };*/
 
     </script>
 

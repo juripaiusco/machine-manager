@@ -38,7 +38,7 @@
 
     </div>
 
-    {{--@if(isset($field->sub_element))
+    {{--@if(isset($field->conn_element_search_code))
 
         <x-form-group-text
             :fieldName="$field->sub_element->name"
