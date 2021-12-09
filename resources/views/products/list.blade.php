@@ -45,6 +45,9 @@
         <tr>
             <th>{{ __('products.cod') }}</th>
             <th>{{ __('products.name') }}</th>
+            <th class="text-center">
+                <i class="fas fa-link"></i> Collegamento
+            </th>
             <th class="text-right">{{ __('products.price') }}</th>
             <th width="160"></th>
         </tr>
@@ -56,6 +59,7 @@
             <tr>
                 <td>{{ $product->cod }}</td>
                 <td>{{ $product->name }}</td>
+                <td class="text-center">{{ $product->sub_element }}</td>
                 <td class="text-right">&euro;&nbsp;{{ number_format($product->price, 2, ',', '.') }}</td>
                 <td class="text-right">
 
