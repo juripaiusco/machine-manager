@@ -5,7 +5,7 @@
             {{ $field->name }}
         </label>
         <input type="text"
-               class="form-control text-center"
+               class="form-control text-left"
                id="{{ $field_name }}"
                autocomplete="off"
 
