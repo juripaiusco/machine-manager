@@ -64,15 +64,53 @@
 
         </div>
 
-        <div class="form-group">
-            <label for="name">Connetti sotto elemento</label>
-            <input type="text"
-                   class="form-control"
-                   id="sub_element"
-                   placeholder="Codice prodotto sotto elemento es.: T0"
-                   name="sub_element"
-                   value="{{ isset($product->id) ? $product->sub_element : '' }}">
+        <p>
+            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseSubElement" aria-expanded="false" aria-controls="collapseSubElement">
+                Connetti componente
+            </button>
+        </p>
+
+        <div class="collapse @if($product->conn_element_search_code != '') show @endif" id="collapseSubElement">
+
+            <div class="card @if($product->conn_element_search_code != '') bg-success @else bg-info @endif text-white">
+                <div class="card-header">Dettagli di connessione</div>
+                <div class="card-body">
+
+                    <div class="row">
+                        <div class="col-lg-6">
+
+                            <div class="form-group">
+                                <label for="name">Nome elemento</label>
+                                <input type="text"
+                                       class="form-control"
+                                       id="conn_element_name"
+                                       placeholder="Nome del prodotto es.: Cuscinetti"
+                                       name="conn_element_name"
+                                       value="{{ isset($product->id) ? $product->conn_element_name : '' }}">
+                            </div>
+
+                        </div>
+                        <div class="col-lg-6">
+
+                            <div class="form-group">
+                                <label for="name">Codice di ricerca</label>
+                                <input type="text"
+                                       class="form-control"
+                                       id="conn_element_search_code"
+                                       placeholder="Codice da filtrare per la ricerca es.: T0"
+                                       name="conn_element_search_code"
+                                       value="{{ isset($product->id) ? $product->conn_element_search_code : '' }}">
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
         </div>
+
+        <br>
 
         <a class="btn btn-secondary" href="javascript: history.go(-1)">Annulla</a>
 

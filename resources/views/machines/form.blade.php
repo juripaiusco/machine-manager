@@ -76,11 +76,15 @@
                 ObjViewValue.val($(this).data('desc'));
                 ObjResult.css('display', 'none');
 
-                /*if ( $(this).data('sub_element') != null ) {
+                if ( $(this).data('sub_element') != null ) {
 
-                    ObjItem.after(ObjItem.clone());
+                    alert($(this).data('sub_element'));
+                    var ObjClone = ObjItem.clone();
 
-                }*/
+                    ObjItem.after(ObjClone);
+                    ObjClone.css('border', '1px solid red');
+
+                }
 
             });
 
