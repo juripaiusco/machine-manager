@@ -41,6 +41,7 @@
 
                 if (obj.value != '') {
 
+                    $('.result-container').css('display', 'none');
                     ObjResult.css('display', 'block');
 
                     $.each(json, function (i, item) {
