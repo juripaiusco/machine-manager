@@ -26,6 +26,8 @@ Route::post('/machines/update/{id}', 'Machine@update')->name('machines.update');
 Route::get('/machines/delete/{id}', 'Machine@destroy')->name('machines.destroy');
 Route::get('/machines/search', 'Machine@search')->name('machines.search');
 
+Route::get('/machines/dynamic-field/{type}', 'Machine@dynamicField');
+
 Route::get('/users', 'User@index')->name('users');
 Route::get('/users/create', 'User@create')->name('users.create');
 Route::post('/users/store', 'User@store')->name('users.store');

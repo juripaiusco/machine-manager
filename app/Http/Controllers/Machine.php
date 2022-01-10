@@ -38,11 +38,11 @@ class Machine extends Controller
      */
     public function create()
     {
-        $json = Storage::disk('public')->get('machines_json/atomizzatori_trainati.json');
+        $json = Storage::disk('public')->get('machines_json/atomizzatore.json');
         $fields_obj = json_decode($json);
 
         return view('machines.form', [
-            'fields_obj' => $fields_obj
+//            'fields_obj' => $fields_obj
         ]);
     }
 
@@ -96,7 +96,7 @@ class Machine extends Controller
      */
     public function edit($id)
     {
-        $json = Storage::disk('public')->get('machines_json/atomizzatori_trainati.json');
+        $json = Storage::disk('public')->get('machines_json/atomizzatore.json');
         $fields_obj = json_decode($json);
 
         $machine = \App\Model\Machine::find($id);
@@ -169,5 +169,15 @@ class Machine extends Controller
                                       ->get();*/
 
         echo json_encode($products);
+    }
+
+    public function dynamicField($type)
+    {
+        $json = Storage::disk('public')->get('machines_json/' . $type . '.json');
+        $fields_obj = json_decode($json);
+
+        return view('machines.form-dynamic-field', [
+            'fields_obj' => $fields_obj
+        ]);
     }
 }
