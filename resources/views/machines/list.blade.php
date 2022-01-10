@@ -4,6 +4,12 @@
 
     <script language="JavaScript">
 
+        function tipologiaOnChange() {
+
+            $('#machinesFormSearch').submit();
+
+        }
+
         window.onload = function() {
 
             $('#deleteModal').on('show.bs.modal', function(e) {
@@ -14,13 +20,61 @@
 
     </script>
 
-    <a class="btn btn-primary" href="{{ route('machines.create') }}">Nuova distinta</a>
+    <div class="row">
+        <div class="col-lg-6">
+            <a class="btn btn-primary" href="{{ route('machines.create') }}">Nuova distinta</a>
+        </div>
+        <div class="col-lg-6">
+
+            <div class="float-right">
+                <form id="machinesFormSearch"
+                      class="form-inline my-2 my-lg-0"
+                      action="{{ route('machines') }}"
+                      method="get">
+
+                    <div class="form-group" style="margin-right: 8px;">
+
+                        <select class="form-control"
+                                id="type"
+                                name="type"
+                                onchange="tipologiaOnChange()">
+
+                            <option value="">Filtra Tipologia</option>
+
+                            @foreach($type_array as $type_name)
+                                <option value="{{ $type_name }}"
+                                @if(isset($type) && $type == $type_name)
+                                selected
+                                @endif>{{ $type_name }}</option>
+                            @endforeach
+
+                        </select>
+
+                    </div>
+
+                    <div class="form-group">
+                        <input class="form-control mr-sm-2"
+                               type="search"
+                               placeholder="cerca macchina"
+                               aria-label="Search"
+                               name="s"
+                               value="{{ $s ?? '' }}" />
+                    </div>
+
+                    <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Cerca</button>
+
+                </form>
+            </div>
+
+        </div>
+    </div>
 
     <br><br>
 
     <table class="table table-striped table-hover">
         <thead>
         <tr>
+            <th>{{ __('machines.type') }}</th>
             <th>{{ __('machines.name') }}</th>
             <th>{{ __('machines.customer') }}</th>
             <th>{{ __('machines.date') }}</th>
@@ -32,6 +86,7 @@
         @foreach($machines as $machine)
 
             <tr>
+                <td class="align-middle">{{ $machine->type }}</td>
                 <td class="align-middle">{{ $machine->name }}</td>
                 <td class="align-middle">{{ $machine->customer }}</td>
                 <td class="align-middle">{{ date('d/m/Y', strtotime($machine->date_machine)) }}</td>

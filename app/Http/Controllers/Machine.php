@@ -7,6 +7,16 @@ use Illuminate\Support\Facades\Storage;
 
 class Machine extends Controller
 {
+    var $type_array = array(
+        'Atomizzatore',
+        'Polverizzatore'
+        /*'Atomizzatori trainati',
+        'Atomizzatori portati',
+        'Polverizzatori semiportati',
+        'Polverizzatori portati',
+        'Gruppo portato'*/
+    );
+
     /**
      * Create a new controller instance.
      *
@@ -22,12 +32,17 @@ class Machine extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $machines = \App\Model\Machine::get();
+        $machines = \App\Model\Machine::where('name', 'LIKE', '%' . $request->input('s') . '%')
+            ->where('json', 'LIKE', '%' . $request->input('type') . '%')
+            ->get();
 
         return view('machines.list', [
-            'machines' => $machines
+            'machines' => $machines,
+            's' => $request->input('s'),
+            'type' => $request->input('type'),
+            'type_array' => $this->type_array
         ]);
     }
 
@@ -38,11 +53,8 @@ class Machine extends Controller
      */
     public function create()
     {
-        $json = Storage::disk('public')->get('machines_json/atomizzatore.json');
-        $fields_obj = json_decode($json);
-
         return view('machines.form', [
-//            'fields_obj' => $fields_obj
+            'type_array' => $this->type_array
         ]);
     }
 
@@ -96,15 +108,12 @@ class Machine extends Controller
      */
     public function edit($id)
     {
-        $json = Storage::disk('public')->get('machines_json/atomizzatore.json');
-        $fields_obj = json_decode($json);
-
         $machine = \App\Model\Machine::find($id);
 
         return view('machines.form', [
             'machine' => $machine,
             'json' => json_decode($machine->json, true),
-            'fields_obj' => $fields_obj
+            'type_array' => $this->type_array
         ]);
     }
 

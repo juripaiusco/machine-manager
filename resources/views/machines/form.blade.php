@@ -190,18 +190,6 @@
 
                         <div class="form-group">
 
-                            @php
-                            $type_array = array(
-                                'Atomizzatore',
-                                'Polverizzatore'
-	                            /*'Atomizzatori trainati',
-                                'Atomizzatori portati',
-                                'Polverizzatori semiportati',
-                                'Polverizzatori portati',
-                                'Gruppo portato'*/
-	                        );
-                            @endphp
-
                             <label for="type">Tipologia</label>
                             <select class="form-control"
                                     id="type"
