@@ -244,7 +244,7 @@
                                    id="author"
                                    placeholder="Il tuo nome"
                                    name="author"
-                                   value="{{ isset($machine->id) ? $machine->author : '' }}">
+                                   value="{{ isset($machine->id) ? $machine->author : Auth::user()->name }}">
                         </div>
 
                     </div>
