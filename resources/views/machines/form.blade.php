@@ -140,6 +140,23 @@
 
         }
 
+        @if(!isset($machine->id))
+
+        window.addEventListener('load', function () {
+
+            $('#sceltaTipologia').modal('show');
+
+            $('body').on('click', '.btn-tipologia', function () {
+
+                $('#type').val($(this).data('value')).change();
+                $('#year').focus();
+
+            });
+
+        });
+
+        @endif
+
     </script>
 
     <form method="post"
@@ -158,11 +175,13 @@
 
                             @php
                             $type_array = array(
-	                            'Atomizzatori trainati',
+                                'Atomizzatore',
+                                'Polverizzatore'
+	                            /*'Atomizzatori trainati',
                                 'Atomizzatori portati',
                                 'Polverizzatori semiportati',
                                 'Polverizzatori portati',
-                                'Gruppo portato'
+                                'Gruppo portato'*/
 	                        );
                             @endphp
 
@@ -340,5 +359,55 @@
                 class="btn btn-primary">Salva</button>
 
     </form>
+
+    <!-- Modal -->
+    <div class="modal fade" id="sceltaTipologia" tabindex="-1" aria-labelledby="sceltaTipologiaLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="sceltaTipologiaLabel">Tipologia Macchina</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="row">
+                        <div class="col-lg-6">
+
+                            <button class="btn-tipologia btn btn-block btn-primary"
+                                    data-dismiss="modal"
+                                    data-value="Atomizzatore">
+
+                                <br>
+
+                                Atomizzatore
+
+                                <br><br>
+
+                            </button>
+
+                        </div>
+                        <div class="col-lg-6">
+
+                            <button class="btn-tipologia btn btn-block btn-success"
+                                    data-dismiss="modal"
+                                    data-value="Polverizzatore">
+
+                                <br>
+
+                                Polverizzatore
+
+                                <br><br>
+
+                            </button>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
 
 @endsection
