@@ -140,29 +140,39 @@
 
         }
 
-        function tipologiaOnChange() {
+        function tipologiaOnChange(id) {
+
+            $url_field = $('#type').find('option:selected').val().toLowerCase();
+
+            if (id != undefined) {
+                $url_field += '/' + id;
+            }
 
             $('#dynamicField')
-                .load('{{ asset('machines') }}/dynamic-field/' + $('#type').find('option:selected').val().toLowerCase());
+                .load('{{ asset('machines') }}/dynamic-field/' + $url_field);
 
         }
 
-        @if(!isset($machine->id))
-
         window.addEventListener('load', function () {
 
-            $('#sceltaTipologia').modal('show');
+            @if(!isset($machine->id))
 
-            $('body').on('click', '.btn-tipologia', function () {
+                $('#sceltaTipologia').modal('show');
 
-                $('#type').val($(this).data('value')).change();
-                $('#year').focus();
+                $('body').on('click', '.btn-tipologia', function () {
 
-            });
+                    $('#type').val($(this).data('value')).change();
+                    $('#year').focus();
+
+                });
+
+            @else
+
+                tipologiaOnChange({{ $machine->id }});
+
+            @endif
 
         });
-
-        @endif
 
     </script>
 
@@ -196,7 +206,7 @@
                             <select class="form-control"
                                     id="type"
                                     name="type"
-                                    onchange="tipologiaOnChange()">
+                                    onchange="tipologiaOnChange(@if(isset($machine->id)) {{ $machine->id }} @endif)">
 
                                 <option value="">Seleziona Tipologia</option>
 

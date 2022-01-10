@@ -171,12 +171,22 @@ class Machine extends Controller
         echo json_encode($products);
     }
 
-    public function dynamicField($type)
+    public function dynamicField($type, $id = '')
     {
         $json = Storage::disk('public')->get('machines_json/' . $type . '.json');
         $fields_obj = json_decode($json);
 
+        $machine = '';
+        $json = '';
+
+        if ($id) {
+            $machine = \App\Model\Machine::find($id);
+            $json = json_decode($machine->json, true);
+        }
+
         return view('machines.form-dynamic-field', [
+            'machine' => $machine,
+            'json' => $json,
             'fields_obj' => $fields_obj
         ]);
     }
