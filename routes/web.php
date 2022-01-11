@@ -25,7 +25,6 @@ Route::get('/machines/edit/{id}', 'Machine@edit')->name('machines.edit');
 Route::post('/machines/update/{id}', 'Machine@update')->name('machines.update');
 Route::get('/machines/delete/{id}', 'Machine@destroy')->name('machines.destroy');
 Route::get('/machines/search', 'Machine@search')->name('machines.search');
-
 Route::get('/machines/dynamic-field/{type}/{id?}', 'Machine@dynamicField');
 
 Route::get('/users', 'User@index')->name('users');
@@ -41,3 +40,6 @@ Route::post('/products/store', 'Product@store')->name('products.store');
 Route::get('/products/edit/{id}', 'Product@edit')->name('products.edit');
 Route::post('/products/update/{id}', 'Product@update')->name('products.update');
 Route::get('/products/delete/{id}', 'Product@destroy')->name('products.destroy');
+
+Route::get('/settings', 'Settings@index')->name('settings');
+Route::post('/settings/store', 'Settings@store')->name('settings.store');

@@ -45,6 +45,9 @@
                             <li class="nav-item {{ Route::is('products') ? 'active' : '' }}">
                                 <a class="nav-link" href="{{ route('products') }}">{{ __('navbar.products') }}</a>
                             </li>
+                            <li class="nav-item {{ Route::is('settings') ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ route('settings') }}">{{ __('navbar.settings') }}</a>
+                            </li>
                         @endif
                     </ul>
 
