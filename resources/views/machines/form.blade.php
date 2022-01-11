@@ -88,14 +88,15 @@
         function clickResultItem(Obj) {
 
             var ObjItem = Obj.closest('.form-group');
-            var ObjHiddenValue = ObjItem.find('.hiddenValue');
+            var ObjHiddenValueCod = ObjItem.find('.hiddenValueCod');
+            var ObjHiddenValueSon = ObjItem.find('.hiddenValueSon');
             var ObjViewValue = ObjItem.find('.form-control');
             var ObjResult = ObjItem.find('.result-container');
 
             var Data_connElementName = Obj.data('conn_element_name');
             var Data_connElementSearchCode = Obj.data('conn_element_search_code');
 
-            ObjHiddenValue.val(Obj.data('cod'));
+            ObjHiddenValueCod.val(Obj.data('cod'));
             ObjViewValue.val(Obj.data('desc'));
             ObjResult.css('display', 'none');
 
@@ -105,6 +106,8 @@
                 var field_name = Data_connElementName.replace(/[^a-zA-Z0-9_]+/g, '').toLowerCase();
 
                 if ( $('#' + field_name).length == 0 ) {
+
+                    ObjHiddenValueSon.val(field_name);
 
                     ObjClone.addClass('conn_element');
 
@@ -119,9 +122,21 @@
                         .attr('onkeyup', 'showResult(this, "' + Data_connElementSearchCode + '")')
                         .val('');
 
-                    ObjClone.find('input[type="hidden"]')
+                    ObjClone.find('.hiddenValueCod')
                         .attr('name', 'json[' + field_name + '][cod]')
                         .val('');
+
+                    ObjClone.find('.hiddenValueSon')
+                        .attr('name', 'json[' + field_name + '][son]')
+                        .val('');
+
+                    ObjClone.find('.hiddenValueName')
+                        .attr('name', 'json[' + field_name + '][name]')
+                        .val(Data_connElementName);
+
+                    ObjClone.find('.hiddenValueSearchCod')
+                        .attr('name', 'json[' + field_name + '][search_cod]')
+                        .val(Data_connElementSearchCode);
 
                     ObjClone.find('.result-container')
                         .attr('id', field_name + 'Result')

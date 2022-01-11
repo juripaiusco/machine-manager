@@ -9,17 +9,19 @@ class formGroupText extends Component
     public $field_name;
     public $field;
     public $json;
+    public $classFormElementGroup;
 
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($fieldName, $field, $json)
+    public function __construct($fieldName, $field, $json, $classFormElementGroup = true)
     {
         $this->field_name = $fieldName;
         $this->field = $field;
         $this->json = $json;
+        $this->classFormElementGroup = $classFormElementGroup;
     }
 
     /**

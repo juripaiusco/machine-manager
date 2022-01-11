@@ -110,6 +110,8 @@ class Machine extends Controller
     {
         $machine = \App\Model\Machine::find($id);
 
+//        dd(json_decode($machine->json, true));
+
         return view('machines.form', [
             'machine' => $machine,
             'json' => json_decode($machine->json, true),
@@ -171,11 +173,6 @@ class Machine extends Controller
                                         })
                                       ->take(5)
                                       ->get();
-
-        /*$products = \App\Model\Product::where('cod', 'LIKE', $request->input('cod') . '%')
-                                      ->where('desc', 'LIKE', '%' . $request->input('q') . '%')
-                                      ->take(5)
-                                      ->get();*/
 
         echo json_encode($products);
     }
