@@ -26,6 +26,7 @@
             background-color: #eee;
             padding: 15px 15px 5px 15px;
             border-radius: 6px;
+            margin-bottom: 15px;
         }
     </style>
 
@@ -67,7 +68,7 @@
 
                             if( ObjFormGroup.hasClass('conn_element') == false ) {
 
-                                ObjFormGroup.closest('.form-element')
+                                $(this).closest('.form-element')
                                     .find('.conn_element')
                                     .remove();
 
