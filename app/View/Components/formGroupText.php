@@ -16,7 +16,7 @@ class formGroupText extends Component
      *
      * @return void
      */
-    public function __construct($fieldName, $field, $json, $classFormElementGroup = true)
+    public function __construct($fieldName, $field, $json, $classFormElementGroup)
     {
         $this->fieldName = $fieldName;
         $this->field = $field;

@@ -57,7 +57,8 @@
                                 <x-form-group-text
                                     :fieldName="$fieldName"
                                     :field="$field"
-                                    :json="$json ?? ''" />
+                                    :json="$json ?? ''"
+                                    :classFormElementGroup="true"/>
 
                             @endswitch
 
