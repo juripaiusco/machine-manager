@@ -11,7 +11,7 @@
                 @foreach($section->fields as $field)
 
                     @php
-                        $field_name = preg_replace("/[^a-zA-Z0-9_]+/", "", strtolower(str_replace(' ', '_', $field->name)))
+                        $fieldName = preg_replace("/[^a-zA-Z0-9_]+/", "", strtolower(str_replace(' ', '_', $field->name)))
                     @endphp
 
                     @if($field->type == 'textarea')
@@ -19,11 +19,11 @@
                         <div class="col-lg-12">
 
                             <div class="form-group">
-                                <label for="{{ $field_name }}">{{ $field->name }}</label>
+                                <label for="{{ $fieldName }}">{{ $field->name }}</label>
                                 <textarea class="form-control"
-                                          id="{{ $field_name }}"
-                                          name="json[{{ $field_name }}]"
-                                          rows="6">@if(isset($json[$field_name])){{ $json[$field_name] }}@endif</textarea>
+                                          id="{{ $fieldName }}"
+                                          name="json[{{ $fieldName }}]"
+                                          rows="6">@if(isset($json[$fieldName])){{ $json[$fieldName] }}@endif</textarea>
                             </div>
 
                         </div>
@@ -39,13 +39,13 @@
                                 <div class="custom-control custom-switch">
                                     <input type="checkbox"
                                            class="custom-control-input"
-                                           id="{{ $field_name }}"
-                                           name="json[{{ $field_name }}]"
-                                           @if(isset($json[$field_name]) && $json[$field_name] == 'on')
+                                           id="{{ $fieldName }}"
+                                           name="json[{{ $fieldName }}]"
+                                           @if(isset($json[$fieldName]) && $json[$fieldName] == 'on')
                                            checked
                                         @endif>
                                     <label class="custom-control-label"
-                                           for="{{ $field_name }}">
+                                           for="{{ $fieldName }}">
                                         {{ $field->name }}
                                     </label>
                                 </div>
@@ -55,7 +55,7 @@
                                 @default
 
                                 <x-form-group-text
-                                    :fieldName="$field_name"
+                                    :fieldName="$fieldName"
                                     :field="$field"
                                     :json="$json ?? ''" />
 

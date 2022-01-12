@@ -6,7 +6,7 @@ use Illuminate\View\Component;
 
 class formGroupText extends Component
 {
-    public $field_name;
+    public $fieldName;
     public $field;
     public $json;
     public $classFormElementGroup;
@@ -18,7 +18,7 @@ class formGroupText extends Component
      */
     public function __construct($fieldName, $field, $json, $classFormElementGroup = true)
     {
-        $this->field_name = $fieldName;
+        $this->fieldName = $fieldName;
         $this->field = $field;
         $this->json = $json;
         $this->classFormElementGroup = $classFormElementGroup;

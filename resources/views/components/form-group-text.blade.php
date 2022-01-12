@@ -1,27 +1,27 @@
-@if($classFormElementGroup == true)
-<div class="form-element @if(isset($json[$field_name]['son']) && $classFormElementGroup == true) form-element-group @endif">
+@if(isset($classFormElementGroup) && $classFormElementGroup == true)
+<div class="form-element @if(isset($json[$fieldName]['son']) && $classFormElementGroup == true) form-element-group @endif">
 @endif
 
-    <div class="form-group @if($classFormElementGroup == false) conn_element @endif">
-        <label for="{{ $field_name }}">
+    <div class="form-group @if(isset($classFormElementGroup) && $classFormElementGroup == false) conn_element @endif">
+        <label for="{{ $fieldName }}">
             {{ $field->name }}
         </label>
         <input type="text"
                class="form-control text-left"
-               id="{{ $field_name }}"
+               id="{{ $fieldName }}"
                autocomplete="off"
 
                @if(isset($field->search_cod) && $field->search_cod != 'null')
 
                placeholder="Ricerca prodotti {{ $field->search_cod }}*"
                onkeyup="showResult(this, '{{ $field->search_cod }}')"
-               name="json[{{ $field_name }}][label]"
-               value="{{ isset($json[$field_name]['label']) ? $json[$field_name]['label'] : '' }}"
+               name="json[{{ $fieldName }}][label]"
+               value="{{ isset($json[$fieldName]['label']) ? $json[$fieldName]['label'] : '' }}"
 
                @else
 
-               name="json[{{ $field_name }}]"
-               value="{{ isset($json[$field_name]) ? $json[$field_name] : '' }}"
+               name="json[{{ $fieldName }}]"
+               value="{{ isset($json[$fieldName]) ? $json[$fieldName] : '' }}"
 
             @endif
         >
@@ -30,49 +30,49 @@
 
             <input type="hidden"
                    class="hiddenValueCod"
-                   name="json[{{ $field_name }}][cod]"
-                   value="{{ isset($json[$field_name]['cod']) ? $json[$field_name]['cod'] : '' }}">
+                   name="json[{{ $fieldName }}][cod]"
+                   value="{{ isset($json[$fieldName]['cod']) ? $json[$fieldName]['cod'] : '' }}">
 
             <input type="hidden"
                    class="hiddenValueSon"
-                   name="json[{{ $field_name }}][son]"
-                   value="{{ isset($json[$field_name]['son']) ? $json[$field_name]['son'] : '' }}">
+                   name="json[{{ $fieldName }}][son]"
+                   value="{{ isset($json[$fieldName]['son']) ? $json[$fieldName]['son'] : '' }}">
 
             <input type="hidden"
                    class="hiddenValueName"
-                   name="json[{{ $field_name }}][name]"
-                   value="{{ isset($json[$field_name]['name']) ? $json[$field_name]['name'] : '' }}">
+                   name="json[{{ $fieldName }}][name]"
+                   value="{{ isset($json[$fieldName]['name']) ? $json[$fieldName]['name'] : '' }}">
 
             <input type="hidden"
                    class="hiddenValueSearchCod"
-                   name="json[{{ $field_name }}][search_cod]"
-                   value="{{ isset($json[$field_name]['search_cod']) ? $json[$field_name]['search_cod'] : '' }}">
+                   name="json[{{ $fieldName }}][search_cod]"
+                   value="{{ isset($json[$fieldName]['search_cod']) ? $json[$fieldName]['search_cod'] : '' }}">
 
             <div class="result-container"
-                 id="{{ $field_name }}Result"></div>
+                 id="{{ $fieldName }}Result"></div>
 
         @endif
 
     </div>
 
-    @if(isset($json[$field_name]['son']))
+    @if(isset($json[$fieldName]['son']))
 
         @php
             $field = (object) array(
-                'name' => $json[$json[$field_name]['son']]['name'],
-                'search_cod' => $json[$json[$field_name]['son']]['search_cod'],
+                'name' => $json[$json[$fieldName]['son']]['name'],
+                'search_cod' => $json[$json[$fieldName]['son']]['search_cod'],
                 'type' => 'text',
             );
         @endphp
 
         <x-form-group-text
-            :fieldName="$json[$field_name]['son']"
+            :fieldName="$json[$fieldName]['son']"
             :field="$field"
             :json="$json ?? ''"
             :classFormElementGroup="false" />
 
     @endif
 
-@if($classFormElementGroup == true)
+@if(isset($classFormElementGroup) && $classFormElementGroup == true)
 </div>
 @endif
