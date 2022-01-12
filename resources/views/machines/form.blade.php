@@ -66,15 +66,17 @@
 
                         $('.result-container').on('click', '.result-item', function () {
 
+                            var Obj = $(this);
+
                             if( ObjFormGroup.hasClass('conn_element') == false ) {
 
-                                $(this).closest('.form-element')
+                                Obj.closest('.form-element')
                                     .find('.conn_element')
                                     .remove();
 
                             }
 
-                            clickResultItem($(this));
+                            clickResultItem(Obj);
 
                         });
 
@@ -89,6 +91,7 @@
         function clickResultItem(Obj) {
 
             var ObjItem = Obj.closest('.form-group');
+            var ObjId = ObjItem.find('input[type=text]').attr('id');
             var ObjHiddenValueCod = ObjItem.find('.hiddenValueCod');
             var ObjHiddenValueSon = ObjItem.find('.hiddenValueSon');
             var ObjViewValue = ObjItem.find('.form-control');
@@ -104,7 +107,7 @@
             if ( Data_connElementSearchCode != null ) {
 
                 var ObjClone = ObjItem.clone();
-                var field_name = Data_connElementName.replace(/[^a-zA-Z0-9_]+/g, '').toLowerCase();
+                var field_name = ObjId + '_' + Data_connElementName.replace(/[^a-zA-Z0-9_]+/g, '').toLowerCase();
 
                 if ( $('#' + field_name).length == 0 ) {
 
