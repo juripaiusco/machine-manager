@@ -25,7 +25,7 @@
 
             @endif
         >
-        
+
         @if(isset($field->search_cod) && $field->search_cod != 'null')
 
             <input type="hidden"
