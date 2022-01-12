@@ -11,7 +11,8 @@
                id="{{ $field_name }}"
                autocomplete="off"
 
-               @if($field->search_cod != 'null')
+               {{--@if($field->search_cod != 'null')--}}
+               @if(isset($field->search_cod))
 
                placeholder="Ricerca prodotti {{ $field->search_cod }}*"
                onkeyup="showResult(this, '{{ $field->search_cod }}')"
@@ -26,7 +27,8 @@
             @endif
         >
 
-        @if($field->search_cod != 'null')
+        {{--@if($field->search_cod != 'null')--}}
+        @if(isset($field->search_cod))
 
             <input type="hidden"
                    class="hiddenValueCod"

@@ -225,7 +225,7 @@
                         </div>
 
                     </div>
-                    <div class="col-lg-3">
+                    {{--<div class="col-lg-3">
 
                         <div class="form-group">
                             <label for="year">Anno</label>
@@ -237,8 +237,8 @@
                                    value="{{ isset($machine->id) ? $machine->year : '' }}">
                         </div>
 
-                    </div>
-                    <div class="col-lg-3">
+                    </div>--}}
+                    <div class="col-lg-6">
 
                         <div class="form-group">
                             <label for="author">Compilatore</label>
@@ -299,11 +299,11 @@
                     <div class="col-lg-9">
 
                         <div class="form-group">
-                            <label for="name">Nome</label>
+                            <label for="name">Nome Macchina</label>
                             <input type="text"
                                    class="form-control"
                                    id="name"
-                                   placeholder="Nome"
+                                   placeholder="Nome della macchina"
                                    name="name"
                                    value="{{ isset($machine->id) ? $machine->name : '' }}">
                         </div>

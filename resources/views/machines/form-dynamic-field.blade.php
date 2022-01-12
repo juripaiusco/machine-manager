@@ -14,38 +14,56 @@
                         $field_name = preg_replace("/[^a-zA-Z0-9_]+/", "", strtolower(str_replace(' ', '_', $field->name)))
                     @endphp
 
-                    <div class="col-lg-6">
+                    @if($field->type == 'textarea')
 
-                        @switch($field->type)
+                        <div class="col-lg-12">
 
-                            @case('check')
-
-                            <div class="custom-control custom-switch">
-                                <input type="checkbox"
-                                       class="custom-control-input"
-                                       id="{{ $field_name }}"
-                                       name="json[{{ $field_name }}]"
-                                       @if(isset($json[$field_name]) && $json[$field_name] == 'on')
-                                       checked
-                                    @endif>
-                                <label class="custom-control-label"
-                                       for="{{ $field_name }}">
-                                    {{ $field->name }}
-                                </label>
+                            <div class="form-group">
+                                <label for="{{ $field_name }}">{{ $field->name }}</label>
+                                <textarea class="form-control"
+                                          id="{{ $field_name }}"
+                                          name="json[{{ $field_name }}]"
+                                          rows="6">@if(isset($json[$field_name])){{ $json[$field_name] }}@endif</textarea>
                             </div>
 
-                            @break
+                        </div>
 
-                            @default
+                    @else
 
-                            <x-form-group-text
-                                :fieldName="$field_name"
-                                :field="$field"
-                                :json="$json ?? ''" />
+                        <div class="col-lg-6">
 
-                        @endswitch
+                            @switch($field->type)
 
-                    </div>
+                                @case('check')
+
+                                <div class="custom-control custom-switch">
+                                    <input type="checkbox"
+                                           class="custom-control-input"
+                                           id="{{ $field_name }}"
+                                           name="json[{{ $field_name }}]"
+                                           @if(isset($json[$field_name]) && $json[$field_name] == 'on')
+                                           checked
+                                        @endif>
+                                    <label class="custom-control-label"
+                                           for="{{ $field_name }}">
+                                        {{ $field->name }}
+                                    </label>
+                                </div>
+
+                                @break
+
+                                @default
+
+                                <x-form-group-text
+                                    :fieldName="$field_name"
+                                    :field="$field"
+                                    :json="$json ?? ''" />
+
+                            @endswitch
+
+                        </div>
+
+                    @endif
 
                 @endforeach
 
