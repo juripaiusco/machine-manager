@@ -38,6 +38,19 @@
         </div>
         @endif
 
+        <div class="form-group">
+
+            <div class="custom-control custom-switch">
+                <input name="settings_active"
+                       id="settings_active"
+                       type="checkbox"
+                       class="custom-control-input"
+                    {{ isset($user->settings_active) ? 'checked' : '' }}>
+                <label class="custom-control-label" for="settings_active">Impostazioni visibili</label>
+            </div>
+
+        </div>
+
         <a class="btn btn-secondary" href="javascript: history.go(-1)">Annulla</a>
 
         <button type="submit"

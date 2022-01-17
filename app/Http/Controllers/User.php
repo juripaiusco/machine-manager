@@ -8,6 +8,16 @@ use Illuminate\Support\Facades\Hash;
 class User extends Controller
 {
     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -43,6 +53,7 @@ class User extends Controller
             'name' => $request->input('name'),
             'email' => $request->input('email'),
             'password' => Hash::make($request->input('password')),
+            'settings_active' => $request->input('settings_active'),
         ]);
 
         return redirect()->route('users');
@@ -86,6 +97,7 @@ class User extends Controller
         $user = \App\Model\User::find($id);
         $user->name = $request->input('name');
         $user->email = $request->input('email');
+        $user->settings_active = $request->input('settings_active');
         $user->save();
 
         return redirect()->route('users');
