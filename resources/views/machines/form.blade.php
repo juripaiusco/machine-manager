@@ -208,6 +208,20 @@
             <div class="card-body">
 
                 <div class="row">
+                    <div class="col-lg-1">
+
+                        <div class="form-group">
+                            <label for="number">Numero</label>
+                            <input type="text"
+                                   class="disabled form-control text-center"
+                                   id="number"
+                                   placeholder="-"
+                                   name="number"
+                                   readonly
+                                   value="{{ isset($machine->id) ? $machine->number : '' }}">
+                        </div>
+
+                    </div>
                     <div class="col-lg-3">
 
                         <div class="form-group">
@@ -245,7 +259,7 @@
                         </div>
 
                     </div>--}}
-                    <div class="col-lg-6">
+                    <div class="col-lg-5">
 
                         <div class="form-group">
                             <label for="author">Compilatore</label>
