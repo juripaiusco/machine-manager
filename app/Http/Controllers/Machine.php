@@ -37,7 +37,7 @@ class Machine extends Controller
         $machines = \App\Model\Machine::where('name', 'LIKE', '%' . $request->input('s') . '%')
             ->where('type', 'LIKE', '%' . $request->input('type') . '%')
             ->orderBy('id', 'DESC')
-            ->get();
+            ->paginate(10);
 
         return view('machines.list', [
             'machines' => $machines,
