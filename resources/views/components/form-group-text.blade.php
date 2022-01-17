@@ -15,6 +15,7 @@
 
                placeholder="Ricerca prodotti {{ $field->search_cod }}*"
                onkeyup="showResult(this, '{{ $field->search_cod }}')"
+               onfocus="showResult(this, '{{ $field->search_cod }}')"
                name="json[{{ $fieldName }}][label]"
                value="{{ isset($json[$fieldName]['label']) ? $json[$fieldName]['label'] : '' }}"
 

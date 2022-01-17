@@ -10,6 +10,8 @@
             width: calc(100% - 30px);
             display: none;
             z-index: 1000;
+            max-height: 278px;
+            overflow-y: auto;
         }
         .result-item {
             padding: 5px;
@@ -45,7 +47,7 @@
                 ObjResult.css('display', 'none');
                 ObjResult.html('');
 
-                if (obj.value != '') {
+                if (json != '') {
 
                     $('.result-container').css('display', 'none');
                     ObjResult.css('display', 'block');
@@ -124,6 +126,7 @@
                         .attr('placeholder', 'Ricerca prodotti ' + Data_connElementSearchCode + '*')
                         .attr('name', 'json[' + field_name + '][label]')
                         .attr('onkeyup', 'showResult(this, "' + Data_connElementSearchCode + '")')
+                        .attr('onfocus', 'showResult(this, "' + Data_connElementSearchCode + '")')
                         .val('');
 
                     ObjClone.find('.hiddenValueCod')

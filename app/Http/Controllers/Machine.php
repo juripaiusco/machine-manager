@@ -166,13 +166,29 @@ class Machine extends Controller
 
     public function search(Request $request)
     {
-        $products = \App\Model\Product::where('cod', 'LIKE', $request->input('cod') . '%')
-                                      ->where(function ($query) use ($request) {
-                                          $query->where('desc', 'LIKE', '%' . $request->input('q') . '%')
-                                                ->orWhere('cod', 'LIKE', '%' . $request->input('q') . '%');
-                                        })
-                                      ->take(5)
-                                      ->get();
+        if ($request->input('q') == '') {
+
+            $products = \App\Model\Product::where('cod', 'LIKE', $request->input('cod') . '%')
+                ->get();
+
+        } else {
+
+            $products = \App\Model\Product::where('cod', 'LIKE', $request->input('cod') . '%')
+                ->where(function ($query) use ($request) {
+
+                    $search_keyword = explode(' ', $request->input('q'));
+
+                    foreach ($search_keyword as $keyword) {
+
+                        $query->where('desc', 'LIKE', '%' . $keyword . '%');
+
+                    }
+
+                    $query->orWhere('cod', 'LIKE', '%' . $request->input('q') . '%');
+
+                })
+                ->get();
+        }
 
         echo json_encode($products);
     }
