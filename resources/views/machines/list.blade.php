@@ -74,6 +74,7 @@
     <table class="table table-striped table-hover">
         <thead>
         <tr>
+            <th>{{ __('machines.number') }}</th>
             <th>{{ __('machines.type') }}</th>
             <th>{{ __('machines.name') }}</th>
             <th>{{ __('machines.customer') }}</th>
@@ -86,6 +87,7 @@
         @foreach($machines as $machine)
 
             <tr>
+                <td class="align-middle">{{ $machine->number }}</td>
                 <td class="align-middle">{{ $machine->type }}</td>
                 <td class="align-middle">{{ $machine->name }}</td>
                 <td class="align-middle">{{ $machine->customer }}</td>

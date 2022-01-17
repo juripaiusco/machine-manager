@@ -35,7 +35,8 @@ class Machine extends Controller
     public function index(Request $request)
     {
         $machines = \App\Model\Machine::where('name', 'LIKE', '%' . $request->input('s') . '%')
-            ->where('json', 'LIKE', '%' . $request->input('type') . '%')
+            ->where('type', 'LIKE', '%' . $request->input('type') . '%')
+            ->orderBy('id', 'DESC')
             ->get();
 
         return view('machines.list', [
@@ -69,8 +70,8 @@ class Machine extends Controller
         $machine = new \App\Model\Machine();
 
         $machine->type = $request->input('type');
-        $machine->year = $request->input('year');
-        $machine->number = $request->input('number');
+        /*$machine->year = $request->input('year');*/
+        $machine->number = $this->getNumber($request->input('type'));
         $machine->author = $request->input('author');
         $machine->name = $request->input('name');
         $machine->n_confirm = $request->input('n_confirm');
@@ -131,8 +132,8 @@ class Machine extends Controller
         $machine = \App\Model\Machine::find($id);
 
         $machine->type = $request->input('type');
-        $machine->year = $request->input('year');
-        $machine->number = $request->input('number');
+        /*$machine->year = $request->input('year');
+        $machine->number = $request->input('number');*/
         $machine->author = $request->input('author');
         $machine->name = $request->input('name');
         $machine->n_confirm = $request->input('n_confirm');
@@ -211,5 +212,21 @@ class Machine extends Controller
             'json' => $json,
             'fields_obj' => $fields_obj
         ]);
+    }
+
+    public function getNumber($type)
+    {
+        $macchina = \App\Model\Machine::select('number')
+            ->where('type', $type)
+            ->orderBy('id', 'DESC')
+            ->first();
+
+        $number = 1;
+
+        if (isset($macchina->number)) {
+            $number += $macchina->number;
+        }
+
+        return $number;
     }
 }
