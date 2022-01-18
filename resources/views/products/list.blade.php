@@ -59,7 +59,12 @@
             <tr>
                 <td>{{ $product->cod }}</td>
                 <td>{{ $product->name }}</td>
-                <td class="text-center">{{ $product->conn_element_search_code }}</td>
+                <td class="text-center">
+                    @php $json = json_decode($product->json) @endphp
+                    @if(isset($json->conn_element_name))
+                        {{ implode(', ', $json->conn_element_name) }}
+                    @endif
+                </td>
                 <td class="text-right">&euro;&nbsp;{{ number_format($product->price, 2, ',', '.') }}</td>
                 <td class="text-right">
 

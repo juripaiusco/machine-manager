@@ -100,7 +100,14 @@ class Product extends Controller
      */
     public function create()
     {
-        return view('products.form');
+        $json = (object) array(
+            'conn_element_name' => array(''),
+            'conn_element_search_code' => array(''),
+        );
+
+        return view('products.form', [
+            'json' => $json
+        ]);
     }
 
     /**
@@ -116,8 +123,9 @@ class Product extends Controller
             'name' => $request->input('name'),
             'desc' => $request->input('desc'),
             'price' => str_replace(',', '.', $request->input('price')),
-            'conn_element_name' => $request->input('conn_element_name'),
-            'conn_element_search_code' => $request->input('conn_element_search_code'),
+            /*'conn_element_name' => $request->input('conn_element_name'),
+            'conn_element_search_code' => $request->input('conn_element_search_code'),*/
+            'json' => json_encode($request->input('json')),
         ]);
 
         return redirect()->route('products');
@@ -144,8 +152,21 @@ class Product extends Controller
     {
         $product = \App\Model\Product::find($id);
 
+        if (!isset($product->json)) {
+
+            $json = (object) array(
+                'conn_element_name' => array(''),
+                'conn_element_search_code' => array(''),
+            );
+
+        } else {
+
+            $json = json_decode($product->json);
+        }
+
         return view('products.form', [
-            'product' => $product
+            'product' => $product,
+            'json' => $json
         ]);
     }
 
@@ -163,8 +184,10 @@ class Product extends Controller
         $product->name = $request->input('name');
         $product->desc = $request->input('desc');
         $product->price = str_replace(',', '.', $request->input('price'));
-        $product->conn_element_name = $request->input('conn_element_name');
-        $product->conn_element_search_code = $request->input('conn_element_search_code');
+        /*$product->conn_element_name = $request->input('conn_element_name');
+        $product->conn_element_search_code = $request->input('conn_element_search_code');*/
+        $product->json = json_encode($request->input('json'));
+
         $product->save();
 
         return redirect()->route('products');

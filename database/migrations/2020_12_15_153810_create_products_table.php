@@ -20,8 +20,9 @@ class CreateProductsTable extends Migration
             $table->char('name', 255);
             $table->longText('desc')->nullable();
             $table->float('price')->nullable();
-            $table->char('conn_element_name', 255)->nullable();
-            $table->char('conn_element_search_code', 255)->nullable();
+            $table->longText('json')->nullable();
+            /*$table->char('conn_element_name', 255)->nullable();
+            $table->char('conn_element_search_code', 255)->nullable();*/
 
             $table->timestamps();
         });
