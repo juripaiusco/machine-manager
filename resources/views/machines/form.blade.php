@@ -127,12 +127,6 @@
             var ItemNameArray = Data_connElementName.split(',');
             var ItemSearchCodeArray = Data_connElementSearchCode.split(',');
 
-            /*if (ItemNameArray.length <= 1) {
-
-                ObjHiddenValueSon.val('');
-
-            }*/
-
             for (var i = ItemNameArray.length - 1; i >= 0; i--) {
 
                 if ( ItemNameArray[i] != 'undefined' ) {
