@@ -54,11 +54,19 @@
 
                     $.each(json, function (i, item) {
 
+                        var json = '';
+
+                        if (item.json != null) {
+                            json = JSON.parse(item.json);
+                        }
+
                         var itemHTML = '<div class="result-item"' +
                             'data-cod="' + item.cod + '"' +
                             'data-desc="' + item.desc + '"' +
-                            'data-conn_element_name="' + item.conn_element_name + '"' +
-                            'data-conn_element_search_code="' + item.conn_element_search_code + '"' +
+                            // 'data-conn_element_name="' + item.conn_element_name + '"' +
+                            // 'data-conn_element_search_code="' + item.conn_element_search_code + '"' +
+                            'data-conn_element_name="' + json.conn_element_name + '"' +
+                            'data-conn_element_search_code="' + json.conn_element_search_code + '"' +
                         '>';
                         itemHTML += '<span class="cod">' + item.cod + '</span><br>';
                         itemHTML += item.desc;
