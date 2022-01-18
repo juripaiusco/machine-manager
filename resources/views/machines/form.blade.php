@@ -34,6 +34,12 @@
 
     <script language="JavaScript">
 
+        function hideResult() {
+
+            $('.result-container').css('display', 'none');
+
+        }
+
         function showResult(obj, cod) {
 
             $.ajax({
@@ -81,6 +87,10 @@
                             if( ObjFormGroup.hasClass('conn_element') == false ) {
 
                                 Obj.closest('.form-element')
+                                    .find('.hiddenValueSon')
+                                    .val('');
+
+                                Obj.closest('.form-element')
                                     .find('.conn_element')
                                     .remove();
 
@@ -114,55 +124,75 @@
             ObjViewValue.val(Obj.data('desc'));
             ObjResult.css('display', 'none');
 
-            if ( Data_connElementSearchCode != null ) {
+            var ItemNameArray = Data_connElementName.split(',');
+            var ItemSearchCodeArray = Data_connElementSearchCode.split(',');
 
-                var ObjClone = ObjItem.clone();
-                var field_name = ObjId + '_' + Data_connElementName.replace(/[^a-zA-Z0-9_]+/g, '').toLowerCase();
+            /*if (ItemNameArray.length <= 1) {
 
-                if ( $('#' + field_name).length == 0 ) {
+                ObjHiddenValueSon.val('');
 
-                    ObjHiddenValueSon.val(field_name);
+            }*/
 
-                    ObjClone.addClass('conn_element');
+            for (var i = ItemNameArray.length - 1; i >= 0; i--) {
 
-                    ObjClone.find('label')
-                        .attr('for', field_name)
-                        .html(Data_connElementName);
+                if ( ItemNameArray[i] != 'undefined' ) {
 
-                    ObjClone.find('input[type="text"]')
-                        .attr('id', field_name)
-                        .attr('placeholder', 'Ricerca prodotti ' + Data_connElementSearchCode + '*')
-                        .attr('name', 'json[' + field_name + '][label]')
-                        .attr('onkeyup', 'showResult(this, "' + Data_connElementSearchCode + '")')
-                        .attr('onfocus', 'showResult(this, "' + Data_connElementSearchCode + '")')
-                        .val('');
+                    var Data_connElementName = ItemNameArray[i];
+                    var Data_connElementSearchCode = ItemSearchCodeArray[i];
 
-                    ObjClone.find('.hiddenValueCod')
-                        .attr('name', 'json[' + field_name + '][cod]')
-                        .val('');
+                    var ObjClone = ObjItem.clone();
+                    var field_name = ObjId + '_' + Data_connElementName.replace(/[^a-zA-Z0-9_]+/g, '').toLowerCase();
 
-                    ObjClone.find('.hiddenValueSon')
-                        .attr('name', 'json[' + field_name + '][son]')
-                        .val('');
+                    var field_nameSon = '';
 
-                    ObjClone.find('.hiddenValueName')
-                        .attr('name', 'json[' + field_name + '][name]')
-                        .val(Data_connElementName);
+                    if (ItemNameArray[i + 1] != undefined) {
+                        field_nameSon = ObjId + '_' + ItemNameArray[i + 1].replace(/[^a-zA-Z0-9_]+/g, '').toLowerCase();
+                    }
 
-                    ObjClone.find('.hiddenValueSearchCod')
-                        .attr('name', 'json[' + field_name + '][search_cod]')
-                        .val(Data_connElementSearchCode);
+                    if ( $('#' + field_name).length == 0 ) {
 
-                    ObjClone.find('.result-container')
-                        .attr('id', field_name + 'Result')
-                        .html('');
+                        ObjHiddenValueSon.val(field_name);
 
-                    ObjItem.after(ObjClone);
+                        ObjClone.addClass('conn_element');
 
-                    ObjClone.find('input[type="text"]').focus();
+                        ObjClone.find('label')
+                            .attr('for', field_name)
+                            .html(Data_connElementName);
 
-                    ObjItem.closest('.form-element')
-                        .addClass('form-element-group');
+                        ObjClone.find('input[type="text"]')
+                            .attr('id', field_name)
+                            .attr('placeholder', 'Ricerca prodotti ' + Data_connElementSearchCode + '*')
+                            .attr('name', 'json[' + field_name + '][label]')
+                            .attr('onkeyup', 'showResult(this, "' + Data_connElementSearchCode + '")')
+                            .attr('onfocus', 'showResult(this, "' + Data_connElementSearchCode + '")')
+                            .val('');
+
+                        ObjClone.find('.hiddenValueCod')
+                            .attr('name', 'json[' + field_name + '][cod]')
+                            .val('');
+
+                        ObjClone.find('.hiddenValueSon')
+                            .attr('name', 'json[' + field_name + '][son]')
+                            .val(field_nameSon);
+
+                        ObjClone.find('.hiddenValueName')
+                            .attr('name', 'json[' + field_name + '][name]')
+                            .val(Data_connElementName);
+
+                        ObjClone.find('.hiddenValueSearchCod')
+                            .attr('name', 'json[' + field_name + '][search_cod]')
+                            .val(Data_connElementSearchCode);
+
+                        ObjClone.find('.result-container')
+                            .attr('id', field_name + 'Result')
+                            .html('');
+
+                        ObjItem.after(ObjClone);
+
+                        ObjItem.closest('.form-element')
+                            .addClass('form-element-group');
+
+                    }
 
                 }
 
