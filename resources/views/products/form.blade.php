@@ -124,11 +124,11 @@
         </p>
 
         <div class="collapse @if(isset($product->id))
-        @if(count($json->conn_element_name) >= 1) show @endif
+        @if(count($json->conn_element_name) >= 1 && $json->conn_element_name[0] != '') show @endif
         @endif" id="collapseSubElement">
 
             <div class="card text-white @if(isset($product->id))
-                {{ count($json->conn_element_name) >= 1 ? 'bg-success' : 'bg-info' }}
+                {{ count($json->conn_element_name) >= 1  && $json->conn_element_name[0] != '' ? 'bg-success' : 'bg-info' }}
             @else
                 bg-info
             @endif">
