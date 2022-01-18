@@ -118,6 +118,18 @@ class Product extends Controller
      */
     public function store(Request $request)
     {
+        // JSON Multi Connect
+        $json_request = $request->input('json');
+
+        if (count($json_request['conn_element_name']) < 2 && $json_request['conn_element_name'][0] == '') {
+
+            $json = null;
+
+        } else {
+
+            $json = json_encode($json_request);
+        }
+
         \App\Model\Product::create([
             'cod' => $request->input('cod'),
             'name' => $request->input('name'),
@@ -125,7 +137,7 @@ class Product extends Controller
             'price' => str_replace(',', '.', $request->input('price')),
             /*'conn_element_name' => $request->input('conn_element_name'),
             'conn_element_search_code' => $request->input('conn_element_search_code'),*/
-            'json' => json_encode($request->input('json')),
+            'json' => $json,
         ]);
 
         return redirect()->route('products');
@@ -186,7 +198,20 @@ class Product extends Controller
         $product->price = str_replace(',', '.', $request->input('price'));
         /*$product->conn_element_name = $request->input('conn_element_name');
         $product->conn_element_search_code = $request->input('conn_element_search_code');*/
-        $product->json = json_encode($request->input('json'));
+
+        // JSON Multi Connect
+        $json_request = $request->input('json');
+
+        if (count($json_request['conn_element_name']) < 2 && $json_request['conn_element_name'][0] == '') {
+
+            $json = null;
+
+        } else {
+
+            $json = json_encode($json_request);
+        }
+
+        $product->json = $json;
 
         $product->save();
 
