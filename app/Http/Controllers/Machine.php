@@ -34,10 +34,16 @@ class Machine extends Controller
      */
     public function index(Request $request)
     {
-        $machines = \App\Model\Machine::where('name', 'LIKE', '%' . $request->input('s') . '%')
-            ->where('type', 'LIKE', '%' . $request->input('type') . '%')
-            ->orderBy('id', 'DESC')
-            ->paginate(10);
+        $machines = \App\Model\Machine::orderBy('id', 'DESC');
+
+        if ($request->input('s') || $request->input('type')) {
+
+            $machines = $machines->where('name', 'LIKE', '%' . $request->input('s') . '%')
+                ->where('type', 'LIKE', '%' . $request->input('type') . '%');
+
+        }
+
+        $machines = $machines->paginate(10);
 
         return view('machines.list', [
             'machines' => $machines,
